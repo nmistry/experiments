@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Da Auto Tweets</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" />
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/tweets">Da Auto Tweets</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/tweets">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container">
+    <div>
+    <table class="table table-striped">
+{%- for tweet in tweets %}
+       <tr>
+            <td width="48"><img src="{{ tweet.user.profile_image_url}}" width="48" height="48"></td>
+            <td><a href="/tweets/user/{{tweet.user.id}}">@{{ tweet.user.screen_name}}</a><br><i>{{ tweet.user.name }}</i></td>
+            <td>{{ tweet.text|urlize }}<br>
+            {%- for hashtag in tweet.entities.hashtags %}<a href="/tweets/hashtag/{{ hashtag.text }}"><button class="btn btn-mini" type="button">#{{ hashtag.text }}</button></a>{%- endfor %}</td></tr>
+{%- endfor %}
+    </table>
+    </div>
+</body>
+    </div>
+</html>
+
